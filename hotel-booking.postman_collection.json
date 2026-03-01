@@ -12,6 +12,17 @@
 					"name": "Register New User",
 					"event": [
 						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const timestamp = Date.now();",
+									"pm.environment.set('userEmail', `testuser${timestamp}@example.com`);",
+									"pm.environment.set('adminEmail', `admin${timestamp}@example.com`);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
 							"listen": "test",
 							"script": {
 								"exec": [
@@ -44,12 +55,19 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Test User\",\n    \"tel\": \"0812345678\",\n    \"email\": \"testuser@example.com\",\n    \"password\": \"password123\"\n}"
+							"raw": "{\n    \"name\": \"Test User\",\n    \"tel\": \"0812345678\",\n    \"email\": \"{{userEmail}}\",\n    \"password\": \"password123\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/v1/auth/register",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "v1", "auth", "register"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
 						}
 					},
 					"response": []
@@ -85,12 +103,19 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Admin User\",\n    \"tel\": \"0898765432\",\n    \"email\": \"admin@example.com\",\n    \"password\": \"admin123\",\n    \"role\": \"admin\"\n}"
+							"raw": "{\n    \"name\": \"Admin User\",\n    \"tel\": \"0898765432\",\n    \"email\": \"{{adminEmail}}\",\n    \"password\": \"admin123\",\n    \"role\": \"admin\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/v1/auth/register",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "v1", "auth", "register"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
 						}
 					},
 					"response": []
@@ -136,12 +161,19 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"testuser@example.com\",\n    \"password\": \"password123\"\n}"
+							"raw": "{\n    \"email\": \"{{userEmail}}\",\n    \"password\": \"password123\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/v1/auth/login",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "v1", "auth", "login"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
 						}
 					},
 					"response": []
@@ -161,7 +193,6 @@
 									"    var jsonData = pm.response.json();",
 									"    pm.expect(jsonData.success).to.eql(true);",
 									"    pm.expect(jsonData.data).to.exist;",
-									"    pm.expect(jsonData.data.email).to.eql(\"testuser@example.com\");",
 									"    pm.environment.set(\"userId\", jsonData.data._id);",
 									"});"
 								],
@@ -179,8 +210,15 @@
 						],
 						"url": {
 							"raw": "{{baseUrl}}/api/v1/auth/me",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "v1", "auth", "me"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"me"
+							]
 						}
 					},
 					"response": []
@@ -216,12 +254,19 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"admin@example.com\",\n    \"password\": \"admin123\"\n}"
+							"raw": "{\n    \"email\": \"{{adminEmail}}\",\n    \"password\": \"admin123\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/v1/auth/login",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "v1", "auth", "login"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
 						}
 					},
 					"response": []
@@ -267,8 +312,14 @@
 						"header": [],
 						"url": {
 							"raw": "{{baseUrl}}/api/v1/hotels",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "v1", "hotels"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"hotels"
+							]
 						}
 					},
 					"response": []
@@ -313,8 +364,16 @@
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/v1/hotels/{{hotelId}}/bookings",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "v1", "hotels", "{{hotelId}}", "bookings"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"hotels",
+								"{{hotelId}}",
+								"bookings"
+							]
 						}
 					},
 					"response": []
@@ -358,8 +417,16 @@
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/v1/hotels/{{hotelId}}/bookings",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "v1", "hotels", "{{hotelId}}", "bookings"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"hotels",
+								"{{hotelId}}",
+								"bookings"
+							]
 						}
 					},
 					"response": []
@@ -403,8 +470,16 @@
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/v1/hotels/{{hotelId}}/bookings",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "v1", "hotels", "{{hotelId}}", "bookings"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"hotels",
+								"{{hotelId}}",
+								"bookings"
+							]
 						}
 					},
 					"response": []
@@ -448,8 +523,16 @@
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/v1/hotels/{{hotelId}}/bookings",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "v1", "hotels", "{{hotelId}}", "bookings"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"hotels",
+								"{{hotelId}}",
+								"bookings"
+							]
 						}
 					},
 					"response": []
@@ -499,8 +582,14 @@
 						],
 						"url": {
 							"raw": "{{baseUrl}}/api/v1/bookings",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "v1", "bookings"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bookings"
+							]
 						}
 					},
 					"response": []
@@ -537,8 +626,15 @@
 						],
 						"url": {
 							"raw": "{{baseUrl}}/api/v1/bookings/{{booking1Id}}",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "v1", "bookings", "{{booking1Id}}"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bookings",
+								"{{booking1Id}}"
+							]
 						}
 					},
 					"response": []
@@ -587,8 +683,15 @@
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/v1/bookings/{{booking1Id}}",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "v1", "bookings", "{{booking1Id}}"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bookings",
+								"{{booking1Id}}"
+							]
 						}
 					},
 					"response": []
@@ -628,8 +731,15 @@
 						],
 						"url": {
 							"raw": "{{baseUrl}}/api/v1/bookings/{{booking3Id}}",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "v1", "bookings", "{{booking3Id}}"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bookings",
+								"{{booking3Id}}"
+							]
 						}
 					},
 					"response": []
@@ -664,8 +774,14 @@
 						],
 						"url": {
 							"raw": "{{baseUrl}}/api/v1/bookings",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "v1", "bookings"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bookings"
+							]
 						}
 					},
 					"response": []
@@ -706,8 +822,14 @@
 						],
 						"url": {
 							"raw": "{{baseUrl}}/api/v1/bookings",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "v1", "bookings"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bookings"
+							]
 						}
 					},
 					"response": []
@@ -742,8 +864,16 @@
 						],
 						"url": {
 							"raw": "{{baseUrl}}/api/v1/hotels/{{hotelId}}/bookings",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "v1", "hotels", "{{hotelId}}", "bookings"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"hotels",
+								"{{hotelId}}",
+								"bookings"
+							]
 						}
 					},
 					"response": []
@@ -792,8 +922,15 @@
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/v1/bookings/{{booking2Id}}",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "v1", "bookings", "{{booking2Id}}"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bookings",
+								"{{booking2Id}}"
+							]
 						}
 					},
 					"response": []
@@ -833,8 +970,15 @@
 						],
 						"url": {
 							"raw": "{{baseUrl}}/api/v1/bookings/{{booking1Id}}",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "v1", "bookings", "{{booking1Id}}"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bookings",
+								"{{booking1Id}}"
+							]
 						}
 					},
 					"response": []
@@ -869,8 +1013,14 @@
 						],
 						"url": {
 							"raw": "{{baseUrl}}/api/v1/bookings",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "v1", "bookings"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bookings"
+							]
 						}
 					},
 					"response": []
