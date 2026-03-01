@@ -1,7 +1,7 @@
 {
-  "name": "vacq",
+  "name": "hotelbooker",
   "version": "1.0.0",
-  "description": "Assignment04",
+  "description": "be-project-68-dango",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
