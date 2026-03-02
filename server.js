@@ -13,6 +13,7 @@ connectDB();
 const hotels = require ('./routes/hotels');
 const auth = require('./routes/auth');
 const bookings = require('./routes/bookings');
+const users = require('./routes/users');
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use(express.json());
 app.use('/api/v1/hotels', hotels);
 app.use('/api/v1/auth',auth);
 app.use('/api/v1/bookings', bookings);
+app.use('/api/v1/users',users)
 
 //Extend Parser
 app.set('query parser', 'extended');
