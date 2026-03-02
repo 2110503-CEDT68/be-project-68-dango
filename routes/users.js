@@ -1,5 +1,5 @@
 const express = require('express');
-const {getUsers, updateUser, deleteUser}=require('../controllers/users');
+const {getUsers, updateUser, deleteUser ,banUser}=require('../controllers/users');
 
 const router=express.Router();
 

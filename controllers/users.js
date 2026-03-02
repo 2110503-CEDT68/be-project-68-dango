@@ -69,24 +69,38 @@ exports.getUsers = async (req, res, next) => {
     }
 };
 
-exports.updateUser = async(req,res,next)=>{
-    
-    try{
-        
-        const user = await User.findByIdAndUpdate(req.params.id ,req.body,{
-            new: true,
-            runValidators: true
-        });
+exports.updateUser = async (req, res, next) => {
+    try {
+        // 1. Find the user and update them with whatever is in req.body
+        // The { new: true } option ensures it returns the updated document, not the old one
+        const user = await User.findByIdAndUpdate(
+            req.params.id, 
+            req.body, 
+            {
+                new: true,
+                runValidators: true
+            }
+        );
 
-        if(!user){
-            return res.status(400).json({success: false});
+        // 2. Check if the user actually existed
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: `User not found with id of ${req.params.id}`
+            });
         }
 
-        res.status(200).json({success: true,data: user});
+        // 3. Send back the success response with the newly updated user data
+        res.status(200).json({ 
+            success: true, 
+            data: user 
+        });
 
-    } catch(err){
-        console.log(err);
-        res.status(400).json({ success: false, message: err.message });
+    } catch (err) {
+        res.status(500).json({
+            success: false, 
+            message: `Server Error: ${err.message}`
+        });
     }
 };
 

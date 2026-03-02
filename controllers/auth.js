@@ -23,8 +23,8 @@ exports.register = async(req, res, next) => {
         sendTokenResponse(user, 200, res);
 
     } catch(err){ 
-        res.status(400).json({success: false}); 
-        console.log(err.stack);
+        console.log(err);
+        res.status(400).json({ success: false, message: err.message });
     }
 };
 
@@ -43,6 +43,10 @@ exports.login = async(req, res, next) => {
     const user = await User.findOne({email}).select('+password');
     if(!user) {
         return res.status(400).json({success: false, msg: 'Invalid credentials'}) ;
+    }
+
+    if (user.isban) {
+        return res.status(403).json({ success: false, message: 'Your account is banned' });
     }
 
     //Check if password matches
