@@ -118,9 +118,9 @@ try{
     res.status(200).json({success: true, data: {}});
         
 } catch(err){
-    res.status(200).json({
+    return res.status(400).json({
         success: false, 
-        msg: `Delete User ${req.params.id}`
+        msg: `Cannot Delete User ${req.params.id}`
         });
    }
 };
